@@ -20,7 +20,7 @@ public class CustomThreadPoolExecutor extends ThreadPoolExecutor {
         }
 
         for (int i = 1; i <= n; i++) {
-            super.execute(command);    //To change body of overridden methods use File | Settings | File Templates.
+            super.execute(command);
 
         }
     }
