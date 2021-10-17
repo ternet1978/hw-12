@@ -1,13 +1,7 @@
 import java.util.Scanner;
 import java.util.concurrent.*;
 
-/**
- * Created with IntelliJ IDEA.
- * User: User
- * Date: 21.09.21
- * Time: 19:48
- * To change this template use File | Settings | File Templates.
- */
+
 public class Main {
 
     public static void main(String[] args) {
@@ -29,11 +23,11 @@ public class Main {
         CountDownLatch allAtomsUsed = new CountDownLatch(countH + countO);
         CountDownLatch allThreadsStarted = new CountDownLatch(countH + countO);
 
-        for (Integer i = 1; i <= countH; i++) {
+        for (int i = 1; i <= countH; i++) {
             new Thread(new Hydrogen(hydrogenSem, allThreadsStarted, allAtomsUsed, moleculePrinted)).start();
         }
 
-        for (Integer i = 0; i < countO; i++) {
+        for (int i = 0; i < countO; i++) {
             new Thread(new Oxygen(oxygenSem, allThreadsStarted, allAtomsUsed, moleculePrinted)).start();
 
         }
@@ -41,20 +35,18 @@ public class Main {
         try {
             allThreadsStarted.await(); // waiting until all threads started
         } catch (InterruptedException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            e.printStackTrace();
         }
 
 
-        for (; ; ) {
+        while (true) {
             if (oxygenSem.getQueueLength() > 0 && hydrogenSem.getQueueLength() > 1) {
                 oxygenSem.release();
                 hydrogenSem.release(2);
                 try {
                     moleculePrinted.await();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-                } catch (BrokenBarrierException e) {
-                    e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+                } catch (InterruptedException | BrokenBarrierException e) {
+                    e.printStackTrace();
                 }
 
             } else {
@@ -68,7 +60,7 @@ public class Main {
         try {
             allAtomsUsed.await();
         } catch (InterruptedException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            e.printStackTrace();
         }
 
         System.out.println("\nTask number 2:");

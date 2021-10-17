@@ -2,13 +2,6 @@ import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
-/**
- * Created with IntelliJ IDEA.
- * User: User
- * Date: 10.10.21
- * Time: 8:50
- * To change this template use File | Settings | File Templates.
- */
 public class CustomThreadPoolExecutor extends ThreadPoolExecutor {
 
     public CustomThreadPoolExecutor(int nThreads) {
